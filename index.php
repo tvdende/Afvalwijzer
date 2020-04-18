@@ -1,18 +1,20 @@
 <?php
 header('Content-Type: text/calendar');
 header('Content-Disposition: attachment; filename="afvalkalender.ical"');
-
+$postcode = $_GET['postcode'];
+$huisnummer = $_GET['huisnummer'];
+$taal= isset($_GET['taal']) ?  $_GET['taal'] : 'nl';
 
 
 $array = array();
 if (file_exists('testcall.test')) {
     $array = json_decode(file_get_contents('testcall.test'), true);
 } else {
-    $data = file_get_contents('https://mijnafvalwijzer.nl/nl/4707wg/4/');
+    $data = file_get_contents("https://mijnafvalwijzer.nl/$taal/$postcode/$huisnummer/");
     $domDocument = new DOMDocument();
     $domDocument->loadHTML($data);
     $jaar = $domDocument->getElementById('jaar-2020');
-    
+
     foreach ($jaar->childNodes as $maand) {
         foreach ($maand->childNodes as $colomn) {
             foreach ($colomn->childNodes as $dag) {
