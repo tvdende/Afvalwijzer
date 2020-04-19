@@ -6,7 +6,11 @@ class Cache
 
     function __construct(int $expireTimeInMinutes)
     {
-        mkdir($this->cacheDirectory);
+        // Check if the cache directory exsists, if not created it.
+        if (!file_exists($this->cacheDirectory)) {
+            mkdir($this->cacheDirectory);
+        }
+
         $this->expireTimeInMinutes = $expireTimeInMinutes;
     }
 
