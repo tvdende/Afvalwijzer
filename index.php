@@ -30,8 +30,8 @@ if ($cache->Exists($cacheFileName) && !$cache->IsExpired($cacheFileName)) {
     $cache->AddToCache($cacheFileName, $array);
 }
 
-switch ($format) {
-    case 'ical':
+switch (Strtoupper($format)) {
+    case 'ICAL':
         header('Content-Type: text/calendar');
         header('Content-Disposition: attachment; filename="afvalkalender.ical"');
         $calendar = new Calendar();
@@ -40,5 +40,9 @@ switch ($format) {
             $calendar->AddEvent($date, $item[0]);
         }
         print $calendar->__toString();
+        break;
+    case 'JSON':
+        header('Content-Type: application/json');
+        print json_encode($array);
         break;
 }
