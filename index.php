@@ -5,8 +5,8 @@ require_once('Caching.php');
 require_once('ICal.php');
 require_once('AfvalwijzerScraper.php');
 
-// header('Content-Type: text/calendar');
-// header('Content-Disposition: attachment; filename="afvalkalender.ical"');
+
+
 $postcodeInput = $_GET['postcode'];
 $huisnummer = $_GET['huisnummer'];
 $taal = isset($_GET['taal']) ?  $_GET['taal'] : 'nl';
@@ -32,6 +32,8 @@ if ($cache->Exists($cacheFileName) && !$cache->IsExpired($cacheFileName)) {
 
 switch ($format) {
     case 'ical':
+        header('Content-Type: text/calendar');
+        header('Content-Disposition: attachment; filename="afvalkalender.ical"');
         $calendar = new Calendar();
         foreach ($array as $item) {
             $date = new DateTime($item[1]->date);
