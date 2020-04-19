@@ -30,7 +30,15 @@ class AfvalwijzerScraper
         $jaar = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]")->item(0);
 
         foreach ($jaar->childNodes as $maand) {
+
+            if (!$maand->hasChildNodes())
+                continue;
+
             foreach ($maand->childNodes as $colomn) {
+
+                if (!$colomn->hasChildNodes())
+                    continue;
+                    
                 foreach ($colomn->childNodes as $dag) {
                     if ($dag->nodeName == 'table') {
                         $dagArray = explode(PHP_EOL, $dag->nodeValue);
