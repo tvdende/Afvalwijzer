@@ -4,8 +4,11 @@ require_once('Postcode.php');
 require_once('Caching.php');
 require_once('ICal.php');
 require_once('AfvalwijzerScraper.php');
-
-
+if (!isset($_GET['postcode']))
+    throw new Exception('Postcode is een verplichte parameter');
+    
+if (!isset($_GET['huisnummer']))
+    throw new Exception('Huinummer is een verplicte parameter');
 
 $postcodeInput = $_GET['postcode'];
 $huisnummer = $_GET['huisnummer'];
